@@ -39,7 +39,6 @@ https://blog.csdn.net/a451343010/article/details/113848415
 ```go
 const Avogadro = 6.02214129e23  // 阿伏伽德罗常数
 const Planck   = 6.62606957e-34 // 普朗克常数
-
 ```
 
 
@@ -53,7 +52,6 @@ const Planck   = 6.62606957e-34 // 普朗克常数
 ```go
 const e = .71828 // 0.71828
 const f = 1.     // 1
-
 ```
 
 #### 2.3 控制标准化输出保留几位有效数字 
@@ -76,7 +74,6 @@ func main() {
 输出：
 3.141593
 3.14
-
 ```
 
 
@@ -155,7 +152,6 @@ func main()  {
 输出：
 myfloat:  1.0000018e+07
 myfloat:  1.0000019e+07
-
 ```
 
 
@@ -178,7 +174,6 @@ func main() {
 myfloat:  1.00000184e+08
 myfloat:  1.0000019e+08
 false
-
 ```
 
 **由于精度的问题，就会出现这种很怪异的现象，****`myfloat == myfloat +1`会返回 `true` 。**
