@@ -1,27 +1,106 @@
 ---
 layout: post
-title: "Welcome to Jekyll!"
-date: 2018-02-05 15:13:18 +0200
+title: "Go基础知识——整型"
+date: 2021-03-27
 image: 12.jpg
 tags: [jekyll, docs]
 categories: jekyll
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+### 1. 整型的10个类型图示 
 
-Jekyll also offers powerful support for code snippets:
+![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/59/Ch4UfWBcABiACCCeAABVG7b19lA284.png)
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+int 和 uint 的区别就在于一个 `u`，有 `u` 说明是无符号，没有 `u`代表有符号。
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+
+### 2. 有无符号的区别 
+
+以 `int8` 和 `uint8` 举例，8 代表 8个bit，能表示的数值个数有 2^8 = 256。
+
+uint8 是无符号，能表示的都是正数，0-255，刚好256个数。
+
+int8 是有符号，既可以正数，也可以负数，那怎么办？对半分呗，-128-127，也刚好 256个数。
+
+
+
+### 3. 使用注意
+
+int8 int16 int32 int64 这几个类型的最后都有一个数值，这表明了它们能表示的数值个数是固定的。
+
+而 int 并没有指定它的位数，说明它的大小，是可以变化的，那根据什么变化呢？
+
+- 当你在32位的系统下，int 和 uint 都占用 4个字节，也就是32位。
+- 若你在64位的系统下，int 和 uint 都占用 8个字节，也就是64位。
+
+出于这个原因，在某些场景下，你应当避免使用 int 和 uint ，而使用更加精确的 int32 和 int64，比如在二进制传输、读写文件的结构描述（为了保持文件的结构不会受到不同编译目标平台字节长度的影响）
+
+
+
+### 4. 不同进制的表示方法（`0b`、`0o`、0x） 
+
+2进制：以`0b`或`0B`为前缀
+
+```
+var num01 int = 0b1100
+```
+
+8进制：以`0o`或者 `0O`为前缀
+
+```
+var num02 int = 0o14
+```
+
+16进制：以`0x` 为前缀
+
+```
+var num03 int = 0xC
+```
+
+下面用一段代码分别使用二进制、8进制、16进制来表示 10 进制的数值：12
+
+
+
+```go
+package main
+
+import (
+    "fmt"
+)
+func main() {
+    var num01 int = 0b1100
+    var num02 int = 0o14
+    var num03 int = 0xC
+
+    fmt.Printf("2进制数 %b 表示的是: %d \n", num01, num01)
+    fmt.Printf("8进制数 %o 表示的是: %d \n", num02, num02)
+    fmt.Printf("16进制数 %X 表示的是: %d \n", num03, num03)
+}
+```
+
+输出如下
+
+```
+2进制数 1100 表示的是: 12
+8进制数 14 表示的是: 12
+16进制数 C 表示的是: 12
+```
+
+
+
+### 5. fmt标准化输出
+
+```
+%b    表示为二进制
+%c    该值对应的unicode码值
+%d    表示为十进制
+%o    表示为八进制
+%q    该值对应的单引号括起来的go语法字符字面值，必要时会采用安全的转义表示
+%x    表示为十六进制，使用a-f
+%X    表示为十六进制，使用A-F
+%U    表示为Unicode格式：U+1234，等价于"U+%04X"
+%E    用科学计数法表示
+%f    用浮点数表示
+```
+
