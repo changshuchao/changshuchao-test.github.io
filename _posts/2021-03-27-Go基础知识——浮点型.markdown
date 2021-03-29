@@ -5,39 +5,22 @@ date: 2021-03-27
 image: 2.jpg
 tags: [Go基础知识]
 categories: Go基础知识
+typora-root-url: ..
 ---
 
 参考：
 
 http://golang.iswbm.com/en/latest/c01/c01_03.html
-
 http://c.biancheng.net/view/14.html
-
 https://blog.csdn.net/a451343010/article/details/113848415
 
 
 
 转换工具：
-|------------------+-------------------------------------|
-| 功能             | 网址                                |
-| -----------------|:-----------------------------------:|
-| 进制转换         | https://tool.lu/hexconvert/         |
-| 单精度浮点数转换 | http://www.styb.cn/cms/ieee_754.php |
-|------------------+-------------------------------------|
+进制转换 https://tool.lu/hexconvert/
+单精度浮点数转换 http://www.styb.cn/cms/ieee_754.php
 
 
-|-----------------+------------+-----------------+----------------|
-| Default aligned |Left aligned| Center aligned  | Right aligned  |
-|-----------------|:-----------|:---------------:|---------------:|
-| First body part |Second cell | Third cell      | fourth cell    |
-| Second line     |foo         | **strong**      | baz            |
-| Third line      |quux        | baz             | bar            |
-|-----------------+------------+-----------------+----------------|
-| Second body     |            |                 |                |
-| 2 line          |            |                 |                |
-|=================+============+=================+================|
-| Footer row      |            |                 |                |
-|-----------------+------------+-----------------+----------------|
 
 
 [TOC]
@@ -49,10 +32,10 @@ https://blog.csdn.net/a451343010/article/details/113848415
 - 浮点数类型的值一般由整数部分、小数点“`.`”和小数部分组成
 - 在其中加入指数部分。指数部分由“E”或“e”以及一个带正负号的10进制数组成。比如，`3.7E-2`表示浮点数`0.037`。又比如，`3.7E+1`表示浮点数`37`。
 
-```go
+~~~go
 const Avogadro = 6.02214129e23  // 阿伏伽德罗常数
 const Planck   = 6.62606957e-34 // 普朗克常数
-```
+~~~
 
 
 
@@ -62,16 +45,16 @@ const Planck   = 6.62606957e-34 // 普朗克常数
 
 浮点数类型值的表示也可以被简化。比如，`37.0`可以被简化为`37`。又比如，`0.037`可以被简化为`.037`。
 
-```go
+~~~go
 const e = .71828 // 0.71828
 const f = 1.     // 1
-```
+~~~
 
 #### 2.3 控制标准化输出保留几位有效数字 
 
 用 Printf 函数打印浮点数时可以使用“%f”来控制保留几位小数：
 
-```go
+~~~go
 package main
 
 import (
@@ -87,7 +70,7 @@ func main() {
 输出：
 3.141593
 3.14
-```
+~~~
 
 
 
@@ -95,11 +78,11 @@ func main() {
 
 #### 3.1 二进制表示小数
 
-![图片.png](https://icenterapi.zte.com.cn/group1/M01/B4/EA/Ch4MdGBcOS2APoD3AACF23VMVVw032.png)
+![图片.png](/images/Go基础知识/浮点-1.png)
 
 #### 3.2 转换成以 2 为底的科学计数法
 
-![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/AC/Ch4UfWBcOYaAJV65AACNA7CG8IY646.png)
+![图片.png](/images/Go基础知识/浮点-2.png)
 
 #### 3.3 小结
 
@@ -117,7 +100,7 @@ func main() {
 
 #### 3.4 具体存储方式
 
-![图片.png](https://icenterapi.zte.com.cn/group1/M01/B4/EC/Ch4MdGBcOsuACBT4AAFlgzVMlco915.png)
+![图片.png](/images/Go基础知识/浮点-3.png)
 
 - 最高位有1bit存储正负号
 - 然后指数部分占据8bits（float32）或11bits（float64），**这里存储的结果是实际的指数加上偏移量之后的结果**。这里设置偏移量，是为了让指数部分不出现负数，全都为大于等于0的正整数。
@@ -153,7 +136,7 @@ func main() {
 
 比如 10000018这个数，用 float32 的类型来表示的话，由于其有效位是7位，将10000018 表示成科学计数法，就是 1.0000018 * 10^7，能精确到小数点后面6位。此时用科学计数法表示后，小数点后有6位，刚刚满足我们的精度要求，意思是什么呢？此时你对这个数进行+1或者-1等数学运算，都能保证计算结果是精确的：
 
-```go
+~~~go
 import "fmt"
 var myfloat float32 = 10000018  //0 10010110 00110001001011010010010  ，转换为二进制1001 1000 1001 0110 1001 0010，正好24位，去掉1.，后面就是23位满足精度要求
 
@@ -165,13 +148,13 @@ func main()  {
 输出：
 myfloat:  1.0000018e+07
 myfloat:  1.0000019e+07
-```
+~~~
 
 
 
 上面举了一个刚好满足精度要求数据的临界情况，为了做对比，下面也举一个刚好不满足精度要求的例子。只要给这个数值多加一位数就行了。换成 100000187，同样使用 float32类型，表示成科学计数法，由于精度有限，表示的时候小数点后面7位是准确的，但若是对其进行数学运算，由于第八位无法表示，所以运算后第七位的值，就会变得不精确。
 
-```go
+~~~go
 import "fmt"
 
 var myfloat01 float32 = 100000182   //0 10011001 01111101011110000110110 ， 因为100000182十进制转换为二进制是1011 1110 1011 1100 0011 0110 110超过了23位
@@ -187,7 +170,7 @@ func main() {
 myfloat:  1.00000184e+08
 myfloat:  1.0000019e+08
 false
-```
+~~~
 
 **由于精度的问题，就会出现这种很怪异的现象，****`myfloat == myfloat +1`会返回 `true` 。**
 
@@ -201,7 +184,7 @@ false
 
 #### 4.2 示例1 
 
-![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/AA/Ch4UfWBcNzCADJYVAADpY-csqPg824.png) 
+![图片.png](/images/Go基础知识/浮点-4.png) 
 
 符号位0表示正数，指数=124-127=-3 尾数.01，二进制科学计数法表示为1.01*2e-3 = (1*2e1+0*2e-1+1*2e-2)*2e-3 = 1.25*1/8 = 0.15625（十进制）
 
@@ -209,7 +192,7 @@ false
 
 
 
-![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/AA/Ch4UfWBcN3mAPn96AADFmZ2xdYU794.png)
+![图片.png](/images/Go基础知识/浮点-5.png)
 
 符号位0表示正数，指数=124-127=-3 尾数.01，二进制科学计数法表示为1.01*2e-3 = (1*2e1+0*2e-1+1*2e-2)*2e-3 = 1.25*1/8 = 0.15625（十进制）
 
@@ -223,11 +206,11 @@ false
 
 #### 5.2 示例1 
 
-![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/AA/Ch4UfWBcNzqARqWvAAB8rYEXVzo997.png)
+![图片.png](/images/Go基础知识/浮点-6.png)
 
 #### 5.3 示例2
 
-![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/96/Ch-0XWBcOPKAPTBnAADbdSPwcw0480.png)
+![图片.png](/images/Go基础知识/浮点-7.png)
 
 
 

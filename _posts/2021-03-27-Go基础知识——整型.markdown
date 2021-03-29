@@ -5,11 +5,12 @@ date: 2021-03-27
 image: 8.jpg
 tags: [Go基础知识]
 categories: Go基础知识
+typora-root-url: ..
 ---
 
-### 1. 整型的10个类型图示 
+### 1. 整型的10个类型图示
 
-![图片.png](https://icenterapi.zte.com.cn/group2/M01/6B/59/Ch4UfWBcABiACCCeAABVG7b19lA284.png)
+![](/images/Go基础知识/整型-1.png)
 
 int 和 uint 的区别就在于一个 `u`，有 `u` 说明是无符号，没有 `u`代表有符号。
 

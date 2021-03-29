@@ -5,8 +5,9 @@ date: 2021-03-29
 image: 7.jpg
 tags: [Go基础知识,并发]
 categories: Go基础知识
+typora-root-url: ..
 ---
 
 
 
-![并发编程小结](C:\Users\10260684.ZTE\Desktop\并发编程小结.png)
+![](/images/Go基础知识/并发编程小结.png)
