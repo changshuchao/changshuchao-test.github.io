@@ -2,7 +2,7 @@
 layout: post
 title: "Go基础知识——byte、rune和字符串"
 date: 2021-03-27
-image: 12.jpg
+image: 6.jpg
 tags: [Go基础知识]
 categories: Go基础知识
 ---

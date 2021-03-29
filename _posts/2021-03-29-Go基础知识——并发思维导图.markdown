@@ -2,7 +2,7 @@
 layout: post
 title: "Go基础知识——并发思维导图"
 date: 2021-03-29
-image: 12.jpg
+image: 7.jpg
 tags: [Go基础知识,并发]
 categories: Go基础知识,并发
 ---
