@@ -2,7 +2,7 @@
 layout: post
 title: "Go并发学习2——并发的几种实现和简介"
 date: 2021-03-31
-image: 1.jpg
+image: 12.jpg
 tags: [Go基础知识,Go并发]
 categories: Go基础知识
 typora-root-url: ..
